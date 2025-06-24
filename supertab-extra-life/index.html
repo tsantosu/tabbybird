@@ -1,0 +1,23 @@
+<!DOCTYPE html>
+<html>
+<head>
+  <title>Buy Extra Life</title>
+  <meta name="viewport" content="width=device-width, initial-scale=1.0" />
+  <style>
+    body { font-family: sans-serif; text-align: center; padding: 40px; background: #f7f7f7; }
+    button { padding: 1em 2em; font-size: 18px; background: #22c55e; color: white; border: none; border-radius: 8px; }
+  </style>
+</head>
+<body>
+  <h1>Get Back in the Game</h1>
+  <p>Buy an extra life to keep playing Tabby Bird!</p>
+  <button onclick="completePurchase()">Buy Extra Life for $0.99</button>
+
+  <script>
+    function completePurchase() {
+      // simulate successful purchase (in real use, call Supertab API here)
+      window.webkit?.messageHandlers?.paymentComplete?.postMessage("success");
+    }
+  </script>
+</body>
+</html>
