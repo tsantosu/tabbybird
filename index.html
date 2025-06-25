@@ -1,31 +1,33 @@
 <!DOCTYPE html>
 <html lang="en">
-<head>
-  <meta charset="UTF-8" />
-  <meta name="viewport" content="width=device-width, initial-scale=1.0" />
-  <title>Supertab Extra Life</title>
-</head>
-<body>
-  <script type="module">
-    import { Supertab } from "https://js.supertab.co/v3/supertab.js";
+  <head>
+    <meta charset="UTF-8" />
+    <meta name="viewport" content="width=device-width, initial-scale=1.0" />
+    <title>Supertab Extra Life</title>
+  </head>
+  <body>
+    <script type="module">
+      import { Supertab } from "https://js.supertab.co/v3/supertab.js";
 
-    const supertabClient = new Supertab({
-      clientId: "test_client.ee7e9cb8-3134-4bc4-b1f7-ecb258909a62"
-    });
+      const supertabClient = new Supertab({
+        clientId: "test_client.ee7e9cb8-3134-4bc4-b1f7-ecb258909a62",
+      });
 
-    const { show } = await supertabClient.createPurchaseButton({
-      experienceId: "experience.8e2aa34a-e92c-4302-8808-8a6ce9de2e46",
-      onDone: ({ priorEntitlement, purchase }) => {
-        if (priorEntitlement || (purchase && purchase.status === "completed")) {
-          window.webkit?.messageHandlers?.paymentComplete?.postMessage("success");
-        } else {
-          console.log("Purchase canceled or failed");
-        }
-      }
-    });
+      // Use createPurchaseModal instead of createPurchaseButton
+      const { showModal } = await supertabClient.createPurchaseModal({
+        experienceId: "experience.8e2aa34a-e92c-4302-8808-8a6ce9de2e46",
+        onDone: ({ priorEntitlement, purchase }) => {
+          if (priorEntitlement || (purchase && purchase.status === "completed")) {
+            window.webkit?.messageHandlers?.paymentComplete?.postMessage("success");
+          } else {
+            console.log("Purchase canceled or failed");
+          }
+        },
+      });
 
-    // Automatically show the modal
-    show();
-  </script>
-</body>
+      // Automatically show the modal
+      showModal();
+    </script>
+  </body>
 </html>
+
