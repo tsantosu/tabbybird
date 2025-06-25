@@ -28,13 +28,13 @@
     </div>
 
     <script>
-      setTimeout(() => {
+      window.onload = function () {
         if (window.webkit?.messageHandlers?.paymentComplete2) {
           window.webkit.messageHandlers.paymentComplete2.postMessage("success");
         } else {
           console.log("No native message handler found.");
         }
-      }, 1000);
+      };
     </script>
   </body>
 </html>
