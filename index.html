@@ -13,6 +13,12 @@
         margin: 0;
         background-color: #ffffff;
       }
+      #supertab-wrapper {
+        transform: scale(0.95);
+        transform-origin: top center;
+        width: 100%;
+        overflow: hidden;
+      }
       #supertab-entrypoint {
         max-width: 480px;
         width: 100%;
@@ -22,7 +28,9 @@
     </style>
   </head>
   <body>
-    <div id="supertab-entrypoint"></div>
+    <div id="supertab-wrapper">
+      <div id="supertab-entrypoint"></div>
+    </div>
 
     <script type="module">
       import { Supertab } from "https://js.supertab.co/v3/supertab.js";
