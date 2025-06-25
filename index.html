@@ -15,65 +15,30 @@
         font-family: sans-serif;
       }
       #supertab-wrapper {
-        transform: scale(0.95);
-        transform-origin: top center;
-        width: 100%;
-        overflow: hidden;
+        text-align: center;
       }
-      #supertab-entrypoint {
-        max-width: 480px;
-        width: 100%;
-        padding: 16px;
-        box-sizing: border-box;
+      .buy-button {
+        padding: 16px 32px;
+        background-color: #ffd700;
+        border: none;
+        border-radius: 8px;
+        font-size: 18px;
+        font-weight: bold;
+        color: #000;
+        cursor: pointer;
+        box-shadow: 0 4px 8px rgba(0, 0, 0, 0.2);
+        transition: background-color 0.3s;
       }
-      #debug-message {
-        position: absolute;
-        top: 10px;
-        left: 10px;
-        background: rgba(255, 255, 0, 0.9);
-        padding: 6px 10px;
-        border-radius: 4px;
-        font-size: 12px;
-        display: none;
+      .buy-button:hover {
+        background-color: #ffc300;
       }
     </style>
   </head>
   <body>
     <div id="supertab-wrapper">
-      <div id="supertab-entrypoint"></div>
+      <a href="https://purchase.supertab.co/?client_id=live_client.54c02eb7-fb15-4551-8de2-21fd5cab02e5&offering_id=offering.8e2aa34a-e92c-4302-8808-8a6ce9de2e46" class="buy-button">
+        Buy a Life for $0.99
+      </a>
     </div>
-    <div id="debug-message">Waiting for Supertab response…</div>
-
-    <script type="module">
-      import { Supertab } from "https://js.supertab.co/v3/supertab.js";
-
-      const supertabClient = new Supertab({
-        clientId: "live_client.54c02eb7-fb15-4551-8de2-21fd5cab02e5",
-      });
-
-      const debugEl = document.getElementById("debug-message");
-      debugEl.style.display = "block";
-
-      const { show } = await supertabClient.createPurchaseButton({
-        experienceId: "experience.8e2aa34a-e92c-4302-8808-8a6ce9de2e46",
-        containerElement: document.getElementById("supertab-entrypoint"),
-        onDone: ({ priorEntitlement, purchase }) => {
-          if (priorEntitlement || (purchase && purchase.status === "completed")) {
-            debugEl.textContent = "Purchase succeeded.";
-            if (window.webkit?.messageHandlers?.paymentComplete2) {
-              window.webkit.messageHandlers.paymentComplete2.postMessage("success");
-            } else {
-              console.log("Purchase success");
-            }
-          } else {
-            debugEl.textContent = "Purchase canceled or failed.";
-            console.log("Purchase canceled or failed");
-          }
-        },
-      });
-
-      // Automatically trigger the modal
-      show();
-    </script>
   </body>
 </html>
