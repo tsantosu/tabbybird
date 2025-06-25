@@ -6,6 +6,8 @@
     <title>Supertab Extra Life</title>
   </head>
   <body>
+    <div id="supertab-entrypoint"></div>
+
     <script type="module">
       import { Supertab } from "https://js.supertab.co/v3/supertab.js";
 
@@ -13,21 +15,24 @@
         clientId: "test_client.ee7e9cb8-3134-4bc4-b1f7-ecb258909a62",
       });
 
-      // Use createPurchaseModal instead of createPurchaseButton
-      const { showModal } = await supertabClient.createPurchaseModal({
+      const { show } = await supertabClient.createPurchaseButton({
         experienceId: "experience.8e2aa34a-e92c-4302-8808-8a6ce9de2e46",
+        containerElement: document.getElementById("supertab-entrypoint"),
         onDone: ({ priorEntitlement, purchase }) => {
           if (priorEntitlement || (purchase && purchase.status === "completed")) {
-            window.webkit?.messageHandlers?.paymentComplete?.postMessage("success");
+            if (window.webkit?.messageHandlers?.paymentComplete2) {
+              window.webkit.messageHandlers.paymentComplete2.postMessage("success");
+            } else {
+              console.log("Purchase success");
+            }
           } else {
             console.log("Purchase canceled or failed");
           }
         },
       });
 
-      // Automatically show the modal
-      showModal();
+      // Automatically trigger the modal
+      show();
     </script>
   </body>
 </html>
-
