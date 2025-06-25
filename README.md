@@ -1,4 +1,4 @@
-# TabbyBird 🐦💸
+# TabbyBird 🐦💸!
 
 **TabbyBird** is a Swift-based iOS game inspired by the classic Flappy Bird — with a twist: the ability to **buy extra lives** using [Supertab](https://supertab.co) micropayments.
 
