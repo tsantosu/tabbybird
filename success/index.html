@@ -3,34 +3,38 @@
   <head>
     <meta charset="UTF-8" />
     <meta name="viewport" content="width=device-width, initial-scale=1.0" />
-    <title>Purchase Success</title>
-    <script>
-      window.onload = function () {
-        if (window.webkit?.messageHandlers?.paymentComplete2) {
-          window.webkit.messageHandlers.paymentComplete2.postMessage("success");
-        } else {
-          console.log("Supertab purchase complete but no bridge found.");
-        }
-      };
-    </script>
+    <title>Supertab Purchase Success</title>
     <style>
       body {
         display: flex;
         justify-content: center;
         align-items: center;
         height: 100vh;
+        margin: 0;
+        background-color: #ffffff;
         font-family: sans-serif;
-        background-color: #f0fff0;
         text-align: center;
-        padding: 20px;
       }
-      p {
-        font-size: 1.25rem;
+      .message {
+        font-size: 20px;
         color: #333;
+        max-width: 80%;
       }
     </style>
   </head>
   <body>
-    <p>Thank you for your purchase! You may now return to the game.</p>
+    <div class="message">
+      Purchase Complete! Returning to game...
+    </div>
+
+    <script>
+      setTimeout(() => {
+        if (window.webkit?.messageHandlers?.paymentComplete2) {
+          window.webkit.messageHandlers.paymentComplete2.postMessage("success");
+        } else {
+          console.log("No native message handler found.");
+        }
+      }, 1000);
+    </script>
   </body>
 </html>
