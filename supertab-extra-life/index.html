@@ -1,23 +1,31 @@
 <!DOCTYPE html>
-<html>
+<html lang="en">
 <head>
-  <title>Buy Extra Life</title>
+  <meta charset="UTF-8" />
   <meta name="viewport" content="width=device-width, initial-scale=1.0" />
-  <style>
-    body { font-family: sans-serif; text-align: center; padding: 40px; background: #f7f7f7; }
-    button { padding: 1em 2em; font-size: 18px; background: #22c55e; color: white; border: none; border-radius: 8px; }
-  </style>
+  <title>Supertab Extra Life</title>
 </head>
 <body>
-  <h1>Get Back in the Game</h1>
-  <p>Buy an extra life to keep playing Tabby Bird!</p>
-  <button onclick="completePurchase()">Buy Extra Life for $0.99</button>
+  <script type="module">
+    import { Supertab } from "https://js.supertab.co/v3/supertab.js";
 
-  <script>
-    function completePurchase() {
-      // simulate successful purchase (in real use, call Supertab API here)
-      window.webkit?.messageHandlers?.paymentComplete?.postMessage("success");
-    }
+    const supertabClient = new Supertab({
+      clientId: "test_client.ee7e9cb8-3134-4bc4-b1f7-ecb258909a62"
+    });
+
+    const { show } = await supertabClient.createPurchaseButton({
+      experienceId: "experience.8e2aa34a-e92c-4302-8808-8a6ce9de2e46",
+      onDone: ({ priorEntitlement, purchase }) => {
+        if (priorEntitlement || (purchase && purchase.status === "completed")) {
+          window.webkit?.messageHandlers?.paymentComplete?.postMessage("success");
+        } else {
+          console.log("Purchase canceled or failed");
+        }
+      }
+    });
+
+    // Automatically show the modal
+    show();
   </script>
 </body>
 </html>
